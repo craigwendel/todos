@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ViewController.didTapAddItemButton(_:)))
     }
     
-    private var todoItems = TodoItem.getMockData()
+    private var todoItems = [TodoItem]()
     
     override func numberOfSections(in tableView: UITableView) -> Int
     {
@@ -94,6 +94,15 @@ class ViewController: UITableViewController {
         
         // Tell the table view a new row has been created
         tableView.insertRows(at: [IndexPath(row: newIndex, section: 0)], with: .top)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+    {
+        if indexPath.row < todoItems.count
+        {
+            todoItems.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .top)
+        }
     }
     
 }
